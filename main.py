@@ -17,43 +17,61 @@ app.add_middleware(
 )
 
 BASE_DIR = Path(__file__).resolve().parent
+MODELS_DIR = BASE_DIR / "models"
+REPORTS_DIR = BASE_DIR / "reports"
 
-# Existing regression and logistic regression models
-classification_model = joblib.load(BASE_DIR / "classification_model.pkl")
-regression_model = joblib.load(BASE_DIR / "regression_model.pkl")
+# Logistic Regression and Linear Regression
+classification_model = joblib.load(
+    MODELS_DIR / "classification_model.pkl"
+)
+regression_model = joblib.load(
+    MODELS_DIR / "regression_model.pkl"
+)
 
-classification_columns = joblib.load(BASE_DIR / "classification_columns.pkl")
-regression_columns = joblib.load(BASE_DIR / "regression_columns.pkl")
+classification_columns = joblib.load(
+    MODELS_DIR / "classification_columns.pkl"
+)
+regression_columns = joblib.load(
+    MODELS_DIR / "regression_columns.pkl"
+)
 
 # KNN
-knn_model = joblib.load(BASE_DIR / "knn_model.pkl")
-knn_scaler = joblib.load(BASE_DIR / "knn_scaler.pkl")
-knn_columns = joblib.load(BASE_DIR / "knn_columns.pkl")
+knn_model = joblib.load(MODELS_DIR / "knn_model.pkl")
+knn_scaler = joblib.load(MODELS_DIR / "knn_scaler.pkl")
+knn_columns = joblib.load(MODELS_DIR / "knn_columns.pkl")
 
 # ANN
-ann_model = joblib.load(BASE_DIR / "ann_model.pkl")
-ann_scaler = joblib.load(BASE_DIR / "ann_scaler.pkl")
-ann_columns = joblib.load(BASE_DIR / "ann_columns.pkl")
+ann_model = joblib.load(MODELS_DIR / "ann_model.pkl")
+ann_scaler = joblib.load(MODELS_DIR / "ann_scaler.pkl")
+ann_columns = joblib.load(MODELS_DIR / "ann_columns.pkl")
 
 # SVM
-svm_model = joblib.load(BASE_DIR / "svm_model.pkl")
-svm_scaler = joblib.load(BASE_DIR / "svm_scaler.pkl")
-svm_columns = joblib.load(BASE_DIR / "svm_columns.pkl")
+svm_model = joblib.load(MODELS_DIR / "svm_model.pkl")
+svm_scaler = joblib.load(MODELS_DIR / "svm_scaler.pkl")
+svm_columns = joblib.load(MODELS_DIR / "svm_columns.pkl")
 
 # Decision Tree
-decision_tree_model = joblib.load(BASE_DIR / "decision_tree_model.pkl")
+decision_tree_model = joblib.load(
+    MODELS_DIR / "decision_tree_model.pkl"
+)
 decision_tree_columns = joblib.load(
-    BASE_DIR / "decision_tree_columns.pkl"
+    MODELS_DIR / "decision_tree_columns.pkl"
 )
 
 # Naive Bayes
-naive_bayes_model = joblib.load(BASE_DIR / "naive_bayes_model.pkl")
-naive_bayes_columns = joblib.load(BASE_DIR / "naive_bayes_columns.pkl")
+naive_bayes_model = joblib.load(
+    MODELS_DIR / "naive_bayes_model.pkl"
+)
+naive_bayes_columns = joblib.load(
+    MODELS_DIR / "naive_bayes_columns.pkl"
+)
 
 # Random Forest
-random_forest_model = joblib.load(BASE_DIR / "random_forest_model.pkl")
+random_forest_model = joblib.load(
+    MODELS_DIR / "random_forest_model.pkl"
+)
 random_forest_columns = joblib.load(
-    BASE_DIR / "random_forest_columns.pkl"
+    MODELS_DIR / "random_forest_columns.pkl"
 )
 
 
@@ -100,21 +118,24 @@ def predict_classification_model(
     return response
 
 
+# Homepage
 @app.get("/")
 def homepage():
     return FileResponse(BASE_DIR / "index.html")
 
 
-# Existing regression endpoint
+# Linear Regression
 @app.post("/predict/regression")
 def predict_regression(customer: Customer):
-    data = prepare_data(customer.model_dump(), regression_columns)
+    data = prepare_data(
+        customer.model_dump(), regression_columns
+    )
     prediction = float(regression_model.predict(data)[0])
 
     return {"prediction": round(max(0, prediction), 2)}
 
 
-# Existing logistic regression endpoint
+# Logistic Regression
 @app.post("/predict/classification")
 def predict_classification(customer: Customer):
     return predict_classification_model(
@@ -124,7 +145,7 @@ def predict_classification(customer: Customer):
     )
 
 
-# KNN endpoint
+# KNN
 @app.post("/predict/knn")
 def predict_knn(customer: Customer):
     return predict_classification_model(
@@ -132,7 +153,7 @@ def predict_knn(customer: Customer):
     )
 
 
-# ANN endpoint
+# ANN
 @app.post("/predict/ann")
 def predict_ann(customer: Customer):
     return predict_classification_model(
@@ -140,7 +161,7 @@ def predict_ann(customer: Customer):
     )
 
 
-# SVM endpoint
+# SVM
 @app.post("/predict/svm")
 def predict_svm(customer: Customer):
     return predict_classification_model(
@@ -148,7 +169,7 @@ def predict_svm(customer: Customer):
     )
 
 
-# Decision Tree endpoint
+# Decision Tree
 @app.post("/predict/decision-tree")
 def predict_decision_tree(customer: Customer):
     return predict_classification_model(
@@ -156,7 +177,7 @@ def predict_decision_tree(customer: Customer):
     )
 
 
-# Naive Bayes endpoint
+# Naive Bayes
 @app.post("/predict/naive-bayes")
 def predict_naive_bayes(customer: Customer):
     return predict_classification_model(
@@ -164,16 +185,18 @@ def predict_naive_bayes(customer: Customer):
     )
 
 
-# Random Forest endpoint
+# Random Forest
 @app.post("/predict/random-forest")
 def predict_random_forest(customer: Customer):
     return predict_classification_model(
         customer, random_forest_model, random_forest_columns
     )
 
+
+# Model performance dashboard
 @app.get("/model-performance")
 def get_model_performance():
-    results_path = BASE_DIR / "model_performance.csv"
+    results_path = REPORTS_DIR / "model_performance.csv"
 
     if not results_path.exists():
         return {"error": "Model performance results not found"}
