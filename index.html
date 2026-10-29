@@ -1,1436 +1,1597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InsureAI | Medical Insurance Intelligence</title>
-
-<style>
-:root{
-  --bg:#061415;
-  --bg2:#092021;
-  --panel:#0d2829;
-  --panel2:#103334;
-  --line:#1d4a4b;
-  --text:#efffff;
-  --muted:#91b8b8;
-  --teal:#35d6c4;
-  --cyan:#66e8f0;
-  --green:#62e6a8;
-  --yellow:#ffd166;
-  --red:#ff7187;
-  --white:#ffffff;
-}
-
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
-
-body{
-  margin:0;
-  min-height:100vh;
-  color:var(--text);
-  font-family:Inter,Segoe UI,Arial,sans-serif;
-  background:
-    radial-gradient(circle at 15% 0%,rgba(53,214,196,.15),transparent 28%),
-    radial-gradient(circle at 90% 20%,rgba(102,232,240,.10),transparent 25%),
-    linear-gradient(135deg,var(--bg),#071b1d 55%,#061314);
-  overflow-x:hidden;
-}
-
-button,input,select{font:inherit}
-
-button{cursor:pointer}
-
-.app{
-  width:min(1250px,94%);
-  margin:auto;
-  padding:25px 0 45px;
-}
-
-/* ---------- HEADER ---------- */
-
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  padding:14px 0 25px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.med-logo{
-  width:48px;
-  height:48px;
-  border-radius:15px;
-  background:linear-gradient(145deg,var(--teal),#168f8c);
-  display:grid;
-  place-items:center;
-  color:#052020;
-  font-weight:1000;
-  font-size:25px;
-  box-shadow:0 0 30px rgba(53,214,196,.25);
-  position:relative;
-}
-
-.med-logo:after{
-  content:"";
-  position:absolute;
-  width:9px;
-  height:9px;
-  background:white;
-  border-radius:50%;
-  right:7px;
-  top:7px;
-  box-shadow:0 0 12px white;
-}
-
-.brand-title{
-  font-size:18px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.brand-sub{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:3px;
-}
-
-.live{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  border:1px solid var(--line);
-  background:rgba(13,40,41,.75);
-  padding:9px 13px;
-  border-radius:999px;
-  font-size:11px;
-  color:#bcecec;
-}
-
-.live-dot{
-  width:8px;
-  height:8px;
-  background:var(--green);
-  border-radius:50%;
-  box-shadow:0 0 12px var(--green);
-  animation:pulse 1.4s infinite;
-}
-
-@keyframes pulse{
-  50%{opacity:.35;transform:scale(.65)}
-}
-
-/* ---------- HERO ---------- */
-
-.hero{
-  display:grid;
-  grid-template-columns:1.45fr .75fr;
-  gap:20px;
-  align-items:stretch;
-  margin:12px 0 23px;
-}
-
-.hero-main{
-  border:1px solid var(--line);
-  border-radius:26px;
-  padding:30px;
-  background:
-    linear-gradient(135deg,rgba(16,51,52,.95),rgba(7,27,29,.96));
-  position:relative;
-  overflow:hidden;
-}
-
-.hero-main:before{
-  content:"";
-  position:absolute;
-  width:250px;
-  height:250px;
-  border:1px solid rgba(53,214,196,.16);
-  border-radius:50%;
-  right:-90px;
-  top:-100px;
-}
-
-.eyebrow{
-  color:var(--teal);
-  text-transform:uppercase;
-  letter-spacing:2.4px;
-  font-size:11px;
-  font-weight:900;
-}
-
-h1{
-  margin:10px 0 12px;
-  font-size:clamp(32px,5vw,57px);
-  line-height:1;
-  letter-spacing:-2px;
-}
-
-.gradient{
-  background:linear-gradient(90deg,#ffffff,var(--cyan),var(--teal));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.hero p{
-  color:var(--muted);
-  max-width:700px;
-  line-height:1.75;
-  font-size:14px;
-  margin:0;
-}
-
-.heartbeat{
-  height:55px;
-  margin-top:20px;
-  overflow:hidden;
-  opacity:.9;
-}
-
-.heartbeat svg{
-  width:100%;
-  height:55px;
-}
-
-.ecg{
-  fill:none;
-  stroke:var(--teal);
-  stroke-width:2.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  stroke-dasharray:900;
-  stroke-dashoffset:900;
-  animation:ecg 3.2s linear infinite;
-  filter:drop-shadow(0 0 5px rgba(53,214,196,.5));
-}
-
-@keyframes ecg{
-  to{stroke-dashoffset:0}
-}
-
-.health-card{
-  border:1px solid var(--line);
-  border-radius:26px;
-  background:linear-gradient(145deg,#103536,#092021);
-  padding:22px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.health-icon{
-  width:55px;
-  height:55px;
-  border-radius:18px;
-  display:grid;
-  place-items:center;
-  font-size:26px;
-  background:rgba(53,214,196,.11);
-  border:1px solid rgba(53,214,196,.25);
-}
-
-.health-card h3{
-  margin:17px 0 7px;
-  font-size:18px;
-}
-
-.health-card p{
-  color:var(--muted);
-  line-height:1.6;
-  font-size:12px;
-  margin:0;
-}
-
-.status{
-  margin-top:18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-top:1px solid var(--line);
-  padding-top:14px;
-  font-size:11px;
-}
-
-.status strong{color:var(--green)}
-
-/* ---------- MAIN GRID ---------- */
-
-.main-grid{
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:20px;
-}
-
-.panel{
-  border:1px solid var(--line);
-  border-radius:23px;
-  background:rgba(10,31,32,.91);
-  padding:23px;
-  box-shadow:0 20px 60px rgba(0,0,0,.18);
-  transition:.25s;
-}
-
-.panel:hover{
-  border-color:#2a6768;
-}
-
-.panel-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.panel h2{
-  margin:0 0 6px;
-  font-size:20px;
-}
-
-.sub{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-
-.step{
-  color:var(--teal);
-  border:1px solid #286263;
-  background:#092526;
-  padding:7px 9px;
-  border-radius:9px;
-  font-size:10px;
-  font-weight:800;
-}
-
-/* ---------- PATIENT INPUTS ---------- */
-
-.fields{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:21px 18px;
-}
-
-.field label,.label{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  color:#cde6e5;
-  font-size:12px;
-  margin-bottom:10px;
-}
-
-.value{
-  color:var(--cyan);
-  font-weight:900;
-}
-
-.range-wrap{
-  background:#082021;
-  border:1px solid #1b4445;
-  padding:11px 12px 8px;
-  border-radius:14px;
-  transition:.2s;
-}
-
-.range-wrap:focus-within{
-  border-color:var(--teal);
-  box-shadow:0 0 0 3px rgba(53,214,196,.08);
-}
-
-input[type=range]{
-  width:100%;
-  accent-color:var(--teal);
-  cursor:pointer;
-}
-
-.range-ends{
-  display:flex;
-  justify-content:space-between;
-  color:#618080;
-  font-size:9px;
-  margin-top:4px;
-}
-
-.select{
-  width:100%;
-  background:#082021;
-  color:var(--text);
-  border:1px solid #1d4a4b;
-  border-radius:13px;
-  padding:12px;
-  outline:none;
-}
-
-.select:focus{
-  border-color:var(--teal);
-  box-shadow:0 0 0 3px rgba(53,214,196,.08);
-}
-
-.choices{
-  display:flex;
-  gap:8px;
-}
-
-.choice{
-  flex:1;
-}
-
-.choice input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
-}
-
-.choice span{
-  display:block;
-  text-align:center;
-  border:1px solid #1d4a4b;
-  background:#082021;
-  padding:12px 7px;
-  min-height:44px;
-  border-radius:12px;
-  color:#86aaaa;
-  cursor:pointer;
-  transition:.2s;
-  font-size:12px;
-}
-
-.choice span:hover{
-  border-color:#317475;
-  transform:translateY(-1px);
-}
-
-.choice input:checked+span{
-  background:rgba(53,214,196,.14);
-  border-color:var(--teal);
-  color:#efffff;
-  box-shadow:inset 0 0 0 1px rgba(53,214,196,.35);
-}
-
-/* ---------- LIVE HEALTH PROFILE ---------- */
-
-.profile{
-  margin-top:20px;
-  border:1px solid #1c4849;
-  background:linear-gradient(135deg,#092425,#071a1b);
-  border-radius:18px;
-  padding:17px;
-}
-
-.profile-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#719595;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-}
-
-.profile-top strong{
-  color:var(--green);
-  font-size:9px;
-}
-
-.profile-summary{
-  margin-top:10px;
-  font-size:13px;
-  line-height:1.7;
-}
-
-.health-indicators{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:13px;
-}
-
-.indicator{
-  border:1px solid #194243;
-  border-radius:12px;
-  padding:11px;
-  background:#071b1c;
-  transition:.25s;
-}
-
-.indicator:hover{
-  transform:translateY(-2px);
-  border-color:#2b6869;
-}
-
-.indicator-icon{font-size:16px}
-
-.indicator-name{
-  color:#719393;
-  font-size:9px;
-  margin-top:5px;
-}
-
-.indicator-value{
-  margin-top:3px;
-  font-size:12px;
-  font-weight:800;
-}
-
-/* ---------- ACTIONS ---------- */
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:16px;
-}
-
-.btn{
-  border:0;
-  border-radius:13px;
-  min-height:48px;
-  padding:12px;
-  font-weight:900;
-  transition:.22s;
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.btn:active{
-  transform:translateY(0) scale(.98);
-}
-
-.primary{
-  background:linear-gradient(120deg,#27cbb8,#54e0d3);
-  color:#04201f;
-  box-shadow:0 10px 25px rgba(53,214,196,.12);
-}
-
-.secondary{
-  background:linear-gradient(120deg,#197d86,#42c5cd);
-  color:#03191a;
-}
-
-.reset{
-  width:100%;
-  margin-top:9px;
-  background:#102c2d;
-  color:#a8cccc;
-  border:1px solid #1d4a4b;
-}
-
-.loading{
-  display:none;
-  text-align:center;
-  color:var(--cyan);
-  font-size:11px;
-  margin-top:13px;
-}
-
-.loading-dot{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--teal);
-  margin-right:7px;
-  animation:pulse 1s infinite;
-}
-
-.error{
-  display:none;
-  margin-top:12px;
-  padding:11px;
-  border:1px solid #713a47;
-  border-radius:11px;
-  background:#28151b;
-  color:#ffabb8;
-  font-size:11px;
-}
-
-/* ---------- RESULTS ---------- */
-
-.results{
-  display:grid;
-  gap:12px;
-}
-
-.result{
-  border:1px solid #1d494a;
-  border-radius:18px;
-  padding:18px;
-  background:linear-gradient(145deg,#0e2d2e,#092021);
-  position:relative;
-  overflow:hidden;
-  transition:.25s;
-}
-
-.result:hover{
-  transform:translateY(-2px);
-  border-color:#2b6869;
-}
-
-.result:before{
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  border-radius:50%;
-  right:-50px;
-  top:-55px;
-  background:rgba(53,214,196,.07);
-}
-
-.result-label{
-  color:#709595;
-  font-size:9px;
-  letter-spacing:1.4px;
-  font-weight:900;
-}
-
-.big{
-  font-size:clamp(27px,3vw,38px);
-  font-weight:900;
-  letter-spacing:-1px;
-  margin:11px 0 4px;
-}
-
-.cost-number{
-  color:var(--cyan);
-}
-
-.hint{
-  font-size:11px;
-  color:#779696;
-  line-height:1.6;
-}
-
-.risk-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-  background:#183435;
-  color:#b6cccc;
-}
-
-.risk-high{
-  background:rgba(255,113,135,.13);
-  color:#ff9aaa;
-  border:1px solid rgba(255,113,135,.3);
-}
-
-.risk-normal{
-  background:rgba(98,230,168,.12);
-  color:#7deab7;
-  border:1px solid rgba(98,230,168,.25);
-}
-
-.meter{
-  height:12px;
-  border-radius:99px;
-  background:#07191a;
-  border:1px solid #173c3d;
-  overflow:hidden;
-  margin:14px 0 8px;
-}
-
-.meter-fill{
-  height:100%;
-  width:0;
-  border-radius:99px;
-  background:linear-gradient(90deg,var(--green),var(--yellow),var(--red));
-  transition:width 1s cubic-bezier(.2,.8,.2,1);
-}
-
-.meter-label{
-  display:flex;
-  justify-content:space-between;
-  color:#6e9090;
-  font-size:9px;
-}
-
-.insight{
-  border:1px solid #1d4a4b;
-  border-radius:18px;
-  padding:16px;
-  background:linear-gradient(135deg,rgba(53,214,196,.08),rgba(9,32,33,.8));
-  line-height:1.7;
-  font-size:12px;
-  color:#b8d1d1;
-}
-
-.insight strong{
-  display:block;
-  color:#ecffff;
-  margin-bottom:4px;
-}
-
-/* ---------- MEDICAL METRICS ---------- */
-
-.metrics{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:13px;
-}
-
-.metric{
-  border:1px solid #1b4445;
-  background:#082021;
-  border-radius:15px;
-  padding:14px;
-  text-align:center;
-}
-
-.metric-icon{
-  font-size:19px;
-}
-
-.metric-name{
-  color:#6f9292;
-  font-size:9px;
-  margin-top:6px;
-  text-transform:uppercase;
-  letter-spacing:.7px;
-}
-
-.metric-value{
-  font-size:12px;
-  font-weight:900;
-  margin-top:4px;
-}
-
-/* ---------- BOTTOM INFO ---------- */
-
-.bottom{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:11px;
-  margin-top:20px;
-}
-
-.info{
-  border:1px solid #1a4142;
-  background:#092021;
-  border-radius:16px;
-  padding:16px;
-  transition:.25s;
-}
-
-.info:hover{
-  border-color:#2a6667;
-  transform:translateY(-2px);
-}
-
-.info b{
-  display:block;
-  font-size:12px;
-  margin-bottom:5px;
-}
-
-.info span{
-  color:#739292;
-  font-size:10px;
-  line-height:1.6;
-}
-
-footer{
-  text-align:center;
-  color:#567676;
-  font-size:9px;
-  line-height:1.8;
-  margin-top:25px;
-}
-
-@media(max-width:900px){
-  .hero,.main-grid{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:600px){
-  .app{width:94%}
-  .header{align-items:flex-start}
-  .live{display:none}
-  .hero-main,.health-card,.panel{padding:18px}
-  .fields{grid-template-columns:1fr}
-  .bottom{grid-template-columns:1fr}
-  .health-indicators,.metrics{grid-template-columns:1fr 1fr 1fr}
-  .actions{grid-template-columns:1fr}
-  h1{letter-spacing:-1px}
-}
-
-@media(max-width:390px){
-  .health-indicators,.metrics{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>INSUREAI | Machine Learning Insurance Predictor</title>
+
+  <style>
+    :root {
+      --bg: #061b1b;
+      --bg2: #092525;
+      --panel: #0d3030;
+      --panel2: #103838;
+      --line: #245353;
+      --text: #ecffff;
+      --muted: #9bbbbb;
+      --accent: #55e0d0;
+      --accent2: #32b8aa;
+      --success: #6ee7b7;
+      --warning: #facc15;
+      --danger: #fb7185;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(85, 224, 208, 0.08), transparent 35%),
+        linear-gradient(135deg, #041515, #071f1f 55%, #061818);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(13, 48, 48, 0.85);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(85, 224, 208, 0.12);
+      border: 1px solid rgba(85, 224, 208, 0.35);
+      font-size: 26px;
+    }
+
+    h1 {
+      font-size: 25px;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--success);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 12px var(--success);
+    }
+
+    /* PANELS */
+
+    .panel {
+      background: rgba(13, 48, 48, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .panel-head h2 {
+      font-size: 19px;
+      margin-bottom: 5px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .step {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 8px 12px;
+      border: 1px solid rgba(85, 224, 208, 0.25);
+      border-radius: 20px;
+      background: rgba(85, 224, 208, 0.06);
+    }
+
+    /* PROFILE GRID */
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .field {
+      background: rgba(6, 27, 27, 0.55);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 14px;
+    }
+
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .value {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #071f1f;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    /* MODEL SELECTOR */
+
+    .model-section {
+      margin-top: 20px;
+    }
+
+    .model-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .model-box {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(6, 27, 27, 0.55);
+      border: 1px solid var(--line);
+    }
+
+    .model-box h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .model-box p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* BUTTONS */
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 11px;
+      padding: 13px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 13px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #052020;
+    }
+
+    .secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .primary:hover {
+      background: #78eee1;
+    }
+
+    /* RESULTS */
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .result-card {
+      min-height: 180px;
+      padding: 22px;
+      border-radius: 16px;
+      background: rgba(6, 27, 27, 0.55);
+      border: 1px solid var(--line);
+    }
+
+    .result-card h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .result-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .result-value {
+      font-size: 31px;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .result-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .normal {
+      color: var(--success);
+    }
+
+    .high {
+      color: var(--danger);
+    }
+
+    .loading {
+      color: var(--warning);
+    }
+
+    /* INSIGHT */
+
+    .insight {
+      border: 1px solid rgba(85, 224, 208, 0.25);
+      background: rgba(85, 224, 208, 0.06);
+      padding: 15px 17px;
+      border-radius: 12px;
+      color: var(--accent);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* PERFORMANCE TABLE */
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th {
+      background: #092525;
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+      padding: 14px 12px;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    tr:hover td {
+      background: rgba(85, 224, 208, 0.035);
+    }
+
+    .best-row td {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .metric {
+      font-weight: bold;
+    }
+
+    #performanceNote {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* BOTTOM INFO */
+
+    .bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      padding: 18px;
+      background: rgba(13, 48, 48, 0.75);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+    }
+
+    .info b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      color: #6f9292;
+      font-size: 11px;
+      line-height: 1.6;
+      padding: 10px 0 25px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .profile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .results-grid,
+      .model-selector {
+        grid-template-columns: 1fr;
+      }
+
+      .bottom {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      header {
+        padding: 18px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
   <!-- HEADER -->
-  <header class="header">
+
+  <header>
     <div class="brand">
-      <div class="med-logo">✚</div>
+      <div class="logo">🛡️</div>
+
       <div>
-        <div class="brand-title">INSUREAI</div>
-        <div class="brand-sub">Medical Insurance Intelligence</div>
+        <h1>INSUREAI</h1>
+        <div class="tagline">
+          Machine Learning Insurance Cost & Risk Prediction
+        </div>
       </div>
     </div>
 
-    <div class="live">
-      <span class="live-dot"></span>
-      AI MODEL SYSTEM ONLINE
+    <div class="status">
+      <span class="status-dot"></span>
+      FastAPI · ML System Online
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
 
-    <div class="hero-main">
-      <div class="eyebrow">Healthcare Analytics · AI Prediction</div>
+  <!-- CUSTOMER PROFILE -->
 
-      <h1>
-        Understand the
-        <span class="gradient">cost of care.</span>
-      </h1>
+  <section class="panel">
 
-      <p>
-        Build a patient profile and use machine learning to estimate
-        medical insurance charges and assess whether the profile falls
-        into the predicted high-cost group.
-      </p>
-
-      <div class="heartbeat" aria-hidden="true">
-        <svg viewBox="0 0 900 55" preserveAspectRatio="none">
-          <path class="ecg"
-            d="M0 28 L100 28 L130 28 L145 12 L158 43 L171 28 L270 28
-               L310 28 L330 28 L346 7 L360 48 L374 28 L475 28
-               L510 28 L530 28 L546 13 L559 43 L573 28 L690 28
-               L720 28 L738 9 L752 47 L767 28 L900 28"/>
-        </svg>
+    <div class="panel-head">
+      <div>
+        <h2>👤 Customer Profile</h2>
+        <div class="muted">
+          Enter customer information to generate machine learning predictions.
+        </div>
       </div>
+
+      <span class="step">01 · INPUT</span>
     </div>
 
-    <aside class="health-card">
-      <div>
-        <div class="health-icon">🩺</div>
-        <h3>Clinical Profile Engine</h3>
-        <p>
-          Your selected information is transformed into a structured
-          customer profile before being sent to the prediction models.
-        </p>
+
+    <div class="profile-grid">
+
+      <!-- AGE -->
+
+      <div class="field">
+
+        <label>
+          <span>Age</span>
+          <span class="value" id="ageValue">30</span>
+        </label>
+
+        <input
+          id="age"
+          type="range"
+          min="18"
+          max="80"
+          value="30"
+        >
+
       </div>
 
-      <div class="status">
-        <span>Prediction engine</span>
-        <strong>READY</strong>
+
+      <!-- BMI -->
+
+      <div class="field">
+
+        <label>
+          <span>BMI</span>
+          <span class="value" id="bmiValue">27.5</span>
+        </label>
+
+        <input
+          id="bmi"
+          type="range"
+          min="15"
+          max="50"
+          step="0.1"
+          value="27.5"
+        >
+
       </div>
-    </aside>
+
+
+      <!-- CHILDREN -->
+
+      <div class="field">
+
+        <label>
+          <span>Children</span>
+          <span class="value" id="childrenValue">0</span>
+        </label>
+
+        <input
+          id="children"
+          type="range"
+          min="0"
+          max="5"
+          value="0"
+        >
+
+      </div>
+
+
+      <!-- SEX -->
+
+      <div class="field">
+
+        <label>
+          <span>Sex</span>
+        </label>
+
+        <select id="sex">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+      </div>
+
+
+      <!-- SMOKER -->
+
+      <div class="field">
+
+        <label>
+          <span>Smoker</span>
+        </label>
+
+        <select id="smoker">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+
+      </div>
+
+
+      <!-- REGION -->
+
+      <div class="field">
+
+        <label>
+          <span>Region</span>
+        </label>
+
+        <select id="region">
+          <option value="southwest">Southwest</option>
+          <option value="southeast">Southeast</option>
+          <option value="northwest">Northwest</option>
+          <option value="northeast">Northeast</option>
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- MODEL SELECTION -->
+
+    <div class="model-section">
+
+      <div class="model-selector">
+
+        <div class="model-box">
+
+          <h3>💰 Regression Model</h3>
+
+          <p>
+            Predicts the estimated numerical insurance charge.
+          </p>
+
+          <button
+            class="primary"
+            id="regressionBtn"
+          >
+            Predict Insurance Charge
+          </button>
+
+        </div>
+
+
+        <div class="model-box">
+
+          <h3>🧠 Classification Model</h3>
+
+          <p>
+            Select one of seven trained machine learning classifiers.
+          </p>
+
+          <select id="classificationModel">
+
+            <option value="logistic">
+              Logistic Regression
+            </option>
+
+            <option value="knn">
+              K-Nearest Neighbors (KNN)
+            </option>
+
+            <option value="ann">
+              Artificial Neural Network (ANN)
+            </option>
+
+            <option value="svm">
+              Support Vector Machine (SVM)
+            </option>
+
+            <option value="decision-tree">
+              Decision Tree
+            </option>
+
+            <option value="naive-bayes">
+              Naive Bayes
+            </option>
+
+            <option value="random-forest">
+              Random Forest
+            </option>
+
+          </select>
+
+          <button
+            class="primary"
+            id="classificationBtn"
+            style="margin-top:12px;"
+          >
+            Predict Cost Category
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RESET -->
+
+    <div class="buttons">
+
+      <button
+        class="secondary"
+        id="resetBtn"
+      >
+        ↺ Reset Profile
+      </button>
+
+    </div>
 
   </section>
 
-  <!-- MAIN -->
-  <main class="main-grid">
 
-    <!-- INPUT PANEL -->
-    <section class="panel">
+  <!-- RESULTS -->
 
-      <div class="panel-head">
-        <div>
-          <h2>🧑‍⚕️ Patient Profile</h2>
-          <div class="sub">Adjust the medical and demographic information below.</div>
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <div>
+        <h2>📈 Prediction Results</h2>
+
+        <div class="muted">
+          Results generated by the selected machine learning models.
         </div>
-        <span class="step">01 · PROFILE</span>
       </div>
 
-      <div class="fields">
+      <span class="step">02 · PREDICTION</span>
 
-        <div class="field">
-          <label>
-            Age
-            <span class="value"><span id="ageValue">30</span> years</span>
-          </label>
+    </div>
 
-          <div class="range-wrap">
-            <input id="age" type="range" min="18" max="64" value="30">
-            <div class="range-ends">
-              <span>18</span><span>64</span>
-            </div>
-          </div>
+
+    <div class="results-grid">
+
+
+      <!-- REGRESSION RESULT -->
+
+      <div class="result-card">
+
+        <h3>💰 Estimated Insurance Charge</h3>
+
+        <div class="result-label">
+          Linear Regression
         </div>
 
-        <div class="field">
-          <label>
-            Body Mass Index
-            <span class="value" id="bmiValue">25.0</span>
-          </label>
-
-          <div class="range-wrap">
-            <input id="bmi" type="range" min="15" max="55" step=".1" value="25">
-            <div class="range-ends">
-              <span>15</span><span>55</span>
-            </div>
-          </div>
+        <div
+          class="result-value"
+          id="regressionResult"
+        >
+          —
         </div>
 
-        <div class="field">
-          <label>
-            Children
-            <span class="value" id="childrenValue">0</span>
-          </label>
-
-          <div class="range-wrap">
-            <input id="children" type="range" min="0" max="5" value="0">
-            <div class="range-ends">
-              <span>0</span><span>5</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>
-            Region
-            <span class="value">LOCATION</span>
-          </label>
-
-          <select class="select" id="region">
-            <option value="northeast">Northeast</option>
-            <option value="northwest">Northwest</option>
-            <option value="southeast">Southeast</option>
-            <option value="southwest">Southwest</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <div class="label">
-            Sex
-            <span class="value">PATIENT</span>
-          </div>
-
-          <div class="choices">
-            <label class="choice">
-              <input type="radio" name="sex" value="female" checked>
-              <span>♀ Female</span>
-            </label>
-
-            <label class="choice">
-              <input type="radio" name="sex" value="male">
-              <span>♂ Male</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="label">
-            Smoking Status
-            <span class="value">LIFESTYLE</span>
-          </div>
-
-          <div class="choices">
-            <label class="choice">
-              <input type="radio" name="smoker" value="no" checked>
-              <span>✓ Non-smoker</span>
-            </label>
-
-            <label class="choice">
-              <input type="radio" name="smoker" value="yes">
-              <span>⚠ Smoker</span>
-            </label>
-          </div>
+        <div
+          class="result-description"
+          id="regressionDescription"
+        >
+          Enter customer information and run the regression model.
         </div>
 
       </div>
 
-      <!-- LIVE PROFILE -->
-      <div class="profile">
 
-        <div class="profile-top">
-          <span>Live Patient Summary</span>
-          <strong>● Updating</strong>
+      <!-- CLASSIFICATION RESULT -->
+
+      <div class="result-card">
+
+        <h3>🧠 Cost Category</h3>
+
+        <div
+          class="result-label"
+          id="classificationModelLabel"
+        >
+          Logistic Regression
         </div>
 
-        <div class="profile-summary" id="summary">
-          30-year-old female · BMI 25.0 · Non-smoker · 0 children · Northeast
+        <div
+          class="result-value"
+          id="classificationResult"
+        >
+          —
         </div>
 
-        <div class="health-indicators">
-
-          <div class="indicator">
-            <div class="indicator-icon">⚖️</div>
-            <div class="indicator-name">BMI STATUS</div>
-            <div class="indicator-value" id="bmiStatus">Healthy range</div>
-          </div>
-
-          <div class="indicator">
-            <div class="indicator-icon">❤️</div>
-            <div class="indicator-name">AGE GROUP</div>
-            <div class="indicator-value" id="ageStatus">Adult</div>
-          </div>
-
-          <div class="indicator">
-            <div class="indicator-icon">🚭</div>
-            <div class="indicator-name">SMOKING</div>
-            <div class="indicator-value" id="smokingStatus">Lower risk</div>
-          </div>
-
+        <div
+          class="result-description"
+          id="classificationDescription"
+        >
+          Select a classification model and run a prediction.
         </div>
 
       </div>
 
-      <!-- ACTIONS -->
-      <div class="actions">
-        <button class="btn primary" id="costBtn" type="button">
-          💰 Predict Insurance Cost
-        </button>
+    </div>
 
-        <button class="btn secondary" id="riskBtn" type="button">
-          🩺 Assess Cost Risk
-        </button>
-      </div>
+  </section>
 
-      <button class="btn reset" id="resetBtn" type="button">
-        ↻ Reset Patient Profile
-      </button>
 
-      <div class="loading" id="loading">
-        <span class="loading-dot"></span>
-        AI model is analyzing the patient profile...
-      </div>
+  <!-- MODEL PERFORMANCE -->
 
-      <div class="error" id="error"></div>
+  <section
+    class="panel"
+    id="modelPerformance"
+  >
 
-    </section>
+    <div class="panel-head">
 
-    <!-- RESULTS PANEL -->
-    <section class="panel">
+      <div>
 
-      <div class="panel-head">
-        <div>
-          <h2>📊 Medical AI Dashboard</h2>
-          <div class="sub">Your machine-learning results appear here.</div>
-        </div>
-        <span class="step">02 · RESULTS</span>
-      </div>
+        <h2>📊 Model Performance Lab</h2>
 
-      <div class="results">
-
-        <!-- REGRESSION -->
-        <div class="result">
-
-          <div class="result-label">
-            LINEAR REGRESSION · ESTIMATED ANNUAL CHARGES
-          </div>
-
-          <div class="big cost-number" id="costResult">
-            $ —
-          </div>
-
-          <div class="hint" id="costHint">
-            Run the cost prediction to estimate annual medical insurance charges.
-          </div>
-
-          <div class="metrics">
-
-            <div class="metric">
-              <div class="metric-icon">🧬</div>
-              <div class="metric-name">Model</div>
-              <div class="metric-value">Linear</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-icon">📈</div>
-              <div class="metric-name">Output</div>
-              <div class="metric-value">Charges</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-icon">💵</div>
-              <div class="metric-name">Unit</div>
-              <div class="metric-value">USD / Year</div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- CLASSIFICATION -->
-        <div class="result">
-
-          <div class="result-label">
-            LOGISTIC REGRESSION · COST RISK ASSESSMENT
-          </div>
-
-          <div class="big">
-            <span class="risk-chip" id="riskResult">
-              Awaiting assessment
-            </span>
-          </div>
-
-          <div class="hint">
-            Probability of belonging to the high-cost insurance group.
-          </div>
-
-          <div class="meter">
-            <div class="meter-fill" id="probabilityBar"></div>
-          </div>
-
-          <div class="meter-label">
-            <span>LOWER</span>
-            <strong id="probabilityText">—</strong>
-            <span>HIGHER</span>
-          </div>
-
-        </div>
-
-        <!-- INSIGHT -->
-        <div class="insight" id="insight" aria-live="polite">
-          <strong>🩺 Medical AI Insight</strong>
-          Adjust the patient profile and run a prediction to generate
-          a model-based insurance assessment.
+        <div class="muted">
+          Compare all seven classifiers on the test dataset.
         </div>
 
       </div>
 
-    </section>
+      <span class="step">
+        03 · ANALYTICS
+      </span>
 
-  </main>
+    </div>
 
-  <!-- INFORMATION CARDS -->
+
+    <!-- BEST MODEL -->
+
+    <div
+      class="insight"
+      id="bestModel"
+    >
+      Loading model performance...
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Model</th>
+
+            <th>Accuracy</th>
+
+            <th>Precision</th>
+
+            <th>Recall</th>
+
+            <th>F1-Score</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="performanceBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <p id="performanceNote">
+      Performance metrics are calculated on the held-out test dataset.
+    </p>
+
+  </section>
+
+
+  <!-- INFORMATION -->
+
   <section class="bottom">
 
     <div class="info">
-      <b>💰 Cost Estimation</b>
+
+      <b>💰 Regression</b>
+
       <span>
-        Linear Regression estimates a numerical medical insurance charge
-        using the patient's selected profile.
+        Linear Regression predicts a numerical insurance charge,
+        rather than a category.
       </span>
+
     </div>
 
-    <div class="info">
-      <b>🩺 Risk Classification</b>
-      <span>
-        Logistic Regression predicts whether the profile belongs to the
-        normal-cost or high-cost group.
-      </span>
-    </div>
 
     <div class="info">
-      <b>🔬 Educational AI</b>
+
+      <b>🧠 Classification</b>
+
       <span>
-        This dashboard uses a historical dataset for a university
-        machine-learning project.
+        Choose among seven trained classifiers to predict
+        normal-cost or high-cost group membership.
       </span>
+
+    </div>
+
+
+    <div class="info">
+
+      <b>🔬 Educational Project</b>
+
+      <span>
+        Predictions use a historical dataset and are not guaranteed
+        quotes, medical advice, or clinical risk assessments.
+      </span>
+
     </div>
 
   </section>
 
+
+  <!-- FOOTER -->
+
   <footer>
-    INSUREAI · Medical Insurance Intelligence · Linear Regression + Logistic Regression + FastAPI<br>
-    Educational machine-learning estimates only. Not medical advice or a guaranteed insurance quote.
+
+    INSUREAI · Machine Learning + FastAPI · Educational demonstration only.
+
+    <br>
+
+    Predictions depend on the training data and model;
+    they are not guaranteed insurance quotes.
+
   </footer>
 
 </div>
 
+
 <script>
 
-const $ = id => document.getElementById(id);
+  /* =========================================================
+     HELPER
+  ========================================================= */
 
-const age = $("age");
-const bmi = $("bmi");
-const children = $("children");
-const region = $("region");
+  function $(id) {
+    return document.getElementById(id);
+  }
 
-function customerData(){
 
-  return {
-    age:Number(age.value),
-    sex:document.querySelector('input[name="sex"]:checked').value,
-    bmi:Number(bmi.value),
-    children:Number(children.value),
-    smoker:document.querySelector('input[name="smoker"]:checked').value,
-    region:region.value
-  };
+  /* =========================================================
+     CUSTOMER PROFILE
+  ========================================================= */
 
-}
+  function getCustomerData() {
 
-/* ---------- LIVE PROFILE ---------- */
+    return {
 
-function getBMIStatus(value){
+      age: Number($("age").value),
 
-  if(value < 18.5) return "Underweight";
-  if(value < 25) return "Healthy range";
-  if(value < 30) return "Overweight";
-  return "Higher BMI";
-}
+      sex: $("sex").value,
 
-function getAgeStatus(value){
+      bmi: Number($("bmi").value),
 
-  if(value < 30) return "Young adult";
-  if(value < 45) return "Adult";
-  if(value < 60) return "Middle age";
-  return "Older adult";
-}
+      children: Number($("children").value),
 
-function updateProfile(){
+      smoker: $("smoker").value,
 
-  const c = customerData();
+      region: $("region").value
 
-  $("ageValue").textContent = c.age;
-  $("bmiValue").textContent = c.bmi.toFixed(1);
-  $("childrenValue").textContent = c.children;
-
-  const regionName =
-    c.region.charAt(0).toUpperCase() + c.region.slice(1);
-
-  $("summary").textContent =
-    `${c.age}-year-old ${c.sex} · BMI ${c.bmi.toFixed(1)} · ` +
-    `${c.smoker === "yes" ? "Smoker" : "Non-smoker"} · ` +
-    `${c.children} children · ${regionName}`;
-
-  $("bmiStatus").textContent = getBMIStatus(c.bmi);
-  $("ageStatus").textContent = getAgeStatus(c.age);
-
-  $("smokingStatus").textContent =
-    c.smoker === "yes" ? "Smoking factor" : "Lower risk";
-
-}
-
-/* ---------- INPUT EVENTS ---------- */
-
-[age,bmi,children,region].forEach(el => {
-
-  el.addEventListener("input",updateProfile);
-  el.addEventListener("change",updateProfile);
-
-});
-
-document.querySelectorAll(
-  'input[name="sex"],input[name="smoker"]'
-).forEach(el => {
-
-  el.addEventListener("change",updateProfile);
-
-});
-
-/* ---------- ERROR / LOADING ---------- */
-
-function showError(message){
-
-  $("error").textContent = message;
-  $("error").style.display = "block";
-
-}
-
-function clearError(){
-
-  $("error").style.display = "none";
-
-}
-
-function loading(show){
-
-  $("loading").style.display = show ? "block" : "none";
-
-  $("costBtn").disabled = show;
-  $("riskBtn").disabled = show;
-
-}
-
-/* ---------- API REQUEST ---------- */
-
-async function requestPrediction(endpoint){
-
-  clearError();
-  loading(true);
-
-  try{
-
-    const response = await fetch(endpoint,{
-
-      method:"POST",
-
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-      body:JSON.stringify(customerData())
-
-    });
-
-    if(!response.ok){
-
-      throw new Error(
-        "Server returned an error."
-      );
-
-    }
-
-    return await response.json();
-
-  }catch(error){
-
-    showError(
-      "Could not get a prediction. Make sure FastAPI is running with: python -m uvicorn main:app --reload"
-    );
-
-    return null;
-
-  }finally{
-
-    loading(false);
+    };
 
   }
 
-}
 
-/* ---------- COST PREDICTION ---------- */
+  /* =========================================================
+     UPDATE PROFILE VALUES
+  ========================================================= */
 
-async function predictCost(){
+  function updateProfile() {
 
-  const data =
-    await requestPrediction("/predict/regression");
+    $("ageValue").textContent =
+      $("age").value;
 
-  if(!data) return;
+    $("bmiValue").textContent =
+      Number($("bmi").value).toFixed(1);
 
-  const value = Number(data.prediction);
+    $("childrenValue").textContent =
+      $("children").value;
 
-  $("costResult").textContent =
-    "$" + value.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
+  }
 
-  $("costHint").textContent =
-    "Estimated annual medical insurance charge generated by the Linear Regression model.";
 
-  $("insight").innerHTML =
-    "<strong>💰 Cost estimate complete</strong>" +
-    "The model used age, sex, BMI, children, smoking status and region " +
-    "to estimate the patient's annual insurance charges.";
+  $("age").addEventListener(
+    "input",
+    updateProfile
+  );
 
-}
+  $("bmi").addEventListener(
+    "input",
+    updateProfile
+  );
 
-/* ---------- RISK PREDICTION ---------- */
+  $("children").addEventListener(
+    "input",
+    updateProfile
+  );
 
-async function predictRisk(){
 
-  const data =
-    await requestPrediction("/predict/classification");
+  /* =========================================================
+     REGRESSION
+  ========================================================= */
 
-  if(!data) return;
+  async function predictRegression() {
 
-  const risk = $("riskResult");
+    const result =
+      $("regressionResult");
 
-  risk.textContent = data.result;
+    const description =
+      $("regressionDescription");
 
-  risk.className =
-    "risk-chip " +
-    (data.prediction === 1
-      ? "risk-high"
-      : "risk-normal");
+    result.textContent =
+      "Loading...";
 
-  const probability =
-    Number(data.probability);
+    result.className =
+      "result-value loading";
 
-  $("probabilityText").textContent =
-    probability.toFixed(1) + "%";
+    description.textContent =
+      "Sending customer information to the regression model...";
 
-  $("probabilityBar").style.width =
-    Math.max(
-      0,
-      Math.min(100,probability)
-    ) + "%";
+    try {
 
-  $("insight").innerHTML =
-    "<strong>" +
-    (data.prediction === 1
-      ? "⚠️ Higher-cost profile detected"
-      : "✓ Normal-cost profile detected") +
-    "</strong>" +
-    "The Logistic Regression model estimated a " +
-    probability.toFixed(1) +
-    "% probability of belonging to the high-cost group. " +
-    "This is a model estimate, not a medical diagnosis or guarantee.";
+      const response =
+        await fetch(
+          "/predict/regression",
+          {
+            method: "POST",
 
-}
+            headers: {
+              "Content-Type": "application/json"
+            },
 
-/* ---------- RESET ---------- */
+            body: JSON.stringify(
+              getCustomerData()
+            )
+          }
+        );
 
-function resetForm(){
 
-  age.value = 30;
-  bmi.value = 25;
-  children.value = 0;
-  region.value = "northeast";
+      if (!response.ok) {
 
-  document.querySelector(
-    'input[name="sex"][value="female"]'
-  ).checked = true;
+        throw new Error(
+          "Regression prediction failed."
+        );
 
-  document.querySelector(
-    'input[name="smoker"][value="no"]'
-  ).checked = true;
+      }
 
-  $("costResult").textContent = "$ —";
 
-  $("costHint").textContent =
-    "Run the cost prediction to estimate annual medical insurance charges.";
+      const data =
+        await response.json();
 
-  $("riskResult").textContent =
-    "Awaiting assessment";
 
-  $("riskResult").className =
-    "risk-chip";
+      const charge =
+        Number(
+          data.prediction
+        );
 
-  $("probabilityText").textContent = "—";
 
-  $("probabilityBar").style.width = "0%";
+      result.textContent =
+        "$" +
+        charge.toLocaleString(
+          "en-US",
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+        );
 
-  $("insight").innerHTML =
-    "<strong>🩺 Medical AI Insight</strong>" +
-    "Adjust the patient profile and run a prediction to generate " +
-    "a model-based insurance assessment.";
 
-  clearError();
+      result.className =
+        "result-value";
+
+
+      description.textContent =
+        "Estimated insurance charge generated by Linear Regression.";
+
+    }
+
+    catch (error) {
+
+      result.textContent =
+        "Error";
+
+      result.className =
+        "result-value high";
+
+      description.textContent =
+        error.message;
+
+    }
+
+  }
+
+
+  /* =========================================================
+     CLASSIFICATION
+  ========================================================= */
+
+  async function predictClassification() {
+
+    const model =
+      $("classificationModel").value;
+
+    const result =
+      $("classificationResult");
+
+    const description =
+      $("classificationDescription");
+
+    const modelLabel =
+      $("classificationModelLabel");
+
+
+    modelLabel.textContent =
+      getModelName(model);
+
+
+    result.textContent =
+      "Loading...";
+
+    result.className =
+      "result-value loading";
+
+    description.textContent =
+      "Sending customer information to the selected classifier...";
+
+
+    const endpoints = {
+
+      "logistic":
+        "/predict/classification",
+
+      "knn":
+        "/predict/knn",
+
+      "ann":
+        "/predict/ann",
+
+      "svm":
+        "/predict/svm",
+
+      "decision-tree":
+        "/predict/decision-tree",
+
+      "naive-bayes":
+        "/predict/naive-bayes",
+
+      "random-forest":
+        "/predict/random-forest"
+
+    };
+
+
+    try {
+
+      const endpoint =
+        endpoints[model];
+
+
+      if (!endpoint) {
+
+        throw new Error(
+          "Invalid classification model."
+        );
+
+      }
+
+
+      const response =
+        await fetch(
+          endpoint,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(
+              getCustomerData()
+            )
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Classification prediction failed."
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      result.textContent =
+        data.result || "Unknown";
+
+
+      if (
+        String(data.result)
+          .toLowerCase()
+          .includes("high")
+      ) {
+
+        result.className =
+          "result-value high";
+
+      }
+
+      else {
+
+        result.className =
+          "result-value normal";
+
+      }
+
+
+      let probabilityText = "";
+
+
+      if (
+        data.probability !== undefined &&
+        data.probability !== null
+      ) {
+
+        probabilityText =
+          " Model confidence: " +
+          Number(data.probability).toFixed(1) +
+          "%.";
+
+      }
+
+
+      description.textContent =
+        "Prediction generated by " +
+        getModelName(model) +
+        "." +
+        probabilityText;
+
+    }
+
+    catch (error) {
+
+      result.textContent =
+        "Error";
+
+      result.className =
+        "result-value high";
+
+      description.textContent =
+        error.message;
+
+    }
+
+  }
+
+
+  /* =========================================================
+     MODEL NAMES
+  ========================================================= */
+
+  function getModelName(model) {
+
+    const names = {
+
+      "logistic":
+        "Logistic Regression",
+
+      "knn":
+        "K-Nearest Neighbors (KNN)",
+
+      "ann":
+        "Artificial Neural Network (ANN)",
+
+      "svm":
+        "Support Vector Machine (SVM)",
+
+      "decision-tree":
+        "Decision Tree",
+
+      "naive-bayes":
+        "Naive Bayes",
+
+      "random-forest":
+        "Random Forest"
+
+    };
+
+
+    return names[model] || model;
+
+  }
+
+
+  /* =========================================================
+     RESET FORM
+  ========================================================= */
+
+  function resetForm() {
+
+    $("age").value =
+      30;
+
+    $("bmi").value =
+      27.5;
+
+    $("children").value =
+      0;
+
+    $("sex").value =
+      "male";
+
+    $("smoker").value =
+      "no";
+
+    $("region").value =
+      "southwest";
+
+    $("classificationModel").value =
+      "logistic";
+
+
+    $("regressionResult").textContent =
+      "—";
+
+    $("regressionResult").className =
+      "result-value";
+
+
+    $("classificationResult").textContent =
+      "—";
+
+    $("classificationResult").className =
+      "result-value";
+
+
+    $("classificationModelLabel").textContent =
+      "Logistic Regression";
+
+
+    $("regressionDescription").textContent =
+      "Enter customer information and run the regression model.";
+
+
+    $("classificationDescription").textContent =
+      "Select a classification model and run a prediction.";
+
+
+    updateProfile();
+
+  }
+
+
+  /* =========================================================
+     BUTTON EVENTS
+  ========================================================= */
+
+  $("regressionBtn")
+    .addEventListener(
+      "click",
+      predictRegression
+    );
+
+
+  $("classificationBtn")
+    .addEventListener(
+      "click",
+      predictClassification
+    );
+
+
+  $("resetBtn")
+    .addEventListener(
+      "click",
+      resetForm
+    );
+
+
+  $("classificationModel")
+    .addEventListener(
+      "change",
+      function () {
+
+        $("classificationModelLabel")
+          .textContent =
+          getModelName(
+            this.value
+          );
+
+      }
+    );
+
+
+  /* =========================================================
+     MODEL PERFORMANCE DASHBOARD
+  ========================================================= */
+
+  async function loadModelPerformance() {
+
+    const best =
+      $("bestModel");
+
+    const body =
+      $("performanceBody");
+
+    const note =
+      $("performanceNote");
+
+
+    try {
+
+      const response =
+        await fetch(
+          "/model-performance"
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Could not load model performance."
+        );
+
+      }
+
+
+      const models =
+        await response.json();
+
+
+      if (
+        !Array.isArray(models) ||
+        models.length === 0
+      ) {
+
+        throw new Error(
+          "No performance results found."
+        );
+
+      }
+
+
+      /* Sort highest accuracy first */
+
+      models.sort(
+        (a, b) =>
+          Number(b.Accuracy) -
+          Number(a.Accuracy)
+      );
+
+
+      /* Best model */
+
+      best.textContent =
+        "🏆 Best accuracy: " +
+        models[0].Model +
+        " — " +
+        Number(
+          models[0].Accuracy
+        ).toFixed(2) +
+        "%";
+
+
+      /* Clear table */
+
+      body.replaceChildren();
+
+
+      /* Create rows */
+
+      models.forEach(
+        (model, index) => {
+
+          const row =
+            document.createElement(
+              "tr"
+            );
+
+
+          if (index === 0) {
+
+            row.className =
+              "best-row";
+
+          }
+
+
+          const values = [
+
+            (
+              index === 0
+                ? "🏆 "
+                : ""
+            ) +
+            model.Model,
+
+            Number(
+              model.Accuracy
+            ).toFixed(2) +
+            "%",
+
+            Number(
+              model.Precision
+            ).toFixed(2) +
+            "%",
+
+            Number(
+              model.Recall
+            ).toFixed(2) +
+            "%",
+
+            Number(
+              model["F1-Score"]
+            ).toFixed(2) +
+            "%"
+
+          ];
+
+
+          values.forEach(
+            (value, cellIndex) => {
+
+              const cell =
+                document.createElement(
+                  "td"
+                );
+
+
+              cell.textContent =
+                value;
+
+
+              if (
+                cellIndex > 0
+              ) {
+
+                cell.className =
+                  "metric";
+
+              }
+
+
+              row.appendChild(
+                cell
+              );
+
+            }
+          );
+
+
+          body.appendChild(
+            row
+          );
+
+        }
+      );
+
+
+      note.textContent =
+        "Precision, recall and F1-score refer to the high-cost class. " +
+        "Results are educational comparisons based on the held-out test dataset, " +
+        "not insurance guarantees.";
+
+    }
+
+
+    catch (error) {
+
+      best.textContent =
+        "⚠️ " +
+        error.message;
+
+
+      note.textContent =
+        "Make sure model_performance.csv exists and the " +
+        "/model-performance endpoint is available in FastAPI.";
+
+    }
+
+  }
+
+
+  /* =========================================================
+     INITIALIZE PAGE
+  ========================================================= */
+
   updateProfile();
 
-}
-
-/* ---------- BUTTONS ---------- */
-
-$("costBtn").addEventListener(
-  "click",
-  predictCost
-);
-
-$("riskBtn").addEventListener(
-  "click",
-  predictRisk
-);
-
-$("resetBtn").addEventListener(
-  "click",
-  resetForm
-);
-
-/* ---------- INITIAL STATE ---------- */
-
-updateProfile();
+  loadModelPerformance();
 
 </script>
 
